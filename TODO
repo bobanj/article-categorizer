@@ -1,4 +1,4 @@
-- Create Portal model  -- mabye think about this
-- Create Category model
-- Create Article model
-- Write rake task
+- Configure rake task
+  for getting data from a1 to get and input only new data
+- Implement formtastic just for the hack of it
+- Implement Baesyan ....... as going along :)

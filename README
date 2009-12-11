@@ -1,2 +1,11 @@
 Guesses the category of a given article, depending from previously parsed articles
 Decission is determined from parsed articles  from www.a1.com.mk
+
+Instalation:
+after cloning
+add database.yml to config dir
+rake gems:install
+rake db:create;rake db:migrate;rake db:seed;
+rake a1:get_articles
+
+#so far :)

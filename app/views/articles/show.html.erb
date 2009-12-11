@@ -1,0 +1,20 @@
+<% title "Article" %>
+
+<p>
+  <strong>Category:</strong>
+  <%=h @article.category %>
+</p>
+<p>
+  <strong>Title:</strong>
+  <%=h @article.title %>
+</p>
+<p>
+  <strong>Body:</strong>
+  <%=h @article.body %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_article_path(@article) %> |
+  <%= link_to "Destroy", @article, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", articles_path %>
+</p>

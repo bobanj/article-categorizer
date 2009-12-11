@@ -1,0 +1,12 @@
+<% title "Portal" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @portal.name %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_portal_path(@portal) %> |
+  <%= link_to "Destroy", @portal, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", portals_path %>
+</p>

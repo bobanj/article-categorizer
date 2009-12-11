@@ -1,0 +1,17 @@
+<% title "Portals" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+  <% for portal in @portals %>
+    <tr>
+      <td><%=h portal.name %></td>
+      <td><%= link_to "Show", portal %></td>
+      <td><%= link_to "Edit", edit_portal_path(portal) %></td>
+      <td><%= link_to "Destroy", portal, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Portal", new_portal_path %></p>

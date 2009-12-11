@@ -1,0 +1,1 @@
+A1_HOSTNAME = 'a1.com.mk'
