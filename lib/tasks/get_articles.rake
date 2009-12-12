@@ -9,9 +9,10 @@ namespace :a1 do
     response, doc = http.get("/default.aspx")
     if response.code == "200"
       doc = Nokogiri::HTML(doc, nil, 'WINDOWS-1251')
-      first_article_id = portal.articles.last.itemid.to_i rescue 0
-      first_article_id = 50 if first_article_id == 0
+      first_article_id = portal.articles.last.itemid.to_i rescue 50
       last_article_id = doc.at('h2>a.Vesti')[:href].match(/[0-9]+/).to_s.to_i rescue 0
+      puts "FIRST ARTICLE #{first_article_id}"
+      puts "LAST ARTICLE #{last_article_id}"
       if last_article_id > 0
         (first_article_id..last_article_id).each do |article_id|
           response, doc = http.get("/vesti/default.aspx?VestID=#{article_id}")
@@ -22,6 +23,7 @@ namespace :a1 do
             title = doc.at('#H2naslov').text
             body = title + doc.css('td p').collect(&:text).join
             category.articles.create :title => title, :body => body, :itemid => article_id.to_s
+            puts "Article #{article_id}"
           end
         end
       else
