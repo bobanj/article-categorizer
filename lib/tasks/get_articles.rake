@@ -12,11 +12,8 @@ namespace :a1 do
       first_article_id = portal.articles.last.itemid.to_i
       first_article_id = 50 if first_article_id == 0
       last_article_id = doc.at('h2>a.Vesti')[:href].match(/[0-9]+/).to_s.to_i rescue 0
-      puts "FIRST ARTICLE ID #{first_article_id}"
-      puts "LAST ARTICLE ID #{last_article_id}"
       if last_article_id > 0
         (first_article_id..last_article_id).each do |article_id|
-          puts "ARTICLE #{article_id}"
           response, doc = http.get("/vesti/default.aspx?VestID=#{article_id}")
           if response.code == "200"
             doc = Nokogiri::HTML(doc, nil, 'WINDOWS-1251')
