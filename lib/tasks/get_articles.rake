@@ -9,7 +9,7 @@ namespace :a1 do
     response, doc = http.get("/default.aspx")
     if response.code == "200"
       doc = Nokogiri::HTML(doc, nil, 'WINDOWS-1251')
-      first_article_id = portal.articles.last.itemid.to_i
+      first_article_id = portal.articles.last.itemid.to_i rescue 0
       first_article_id = 50 if first_article_id == 0
       last_article_id = doc.at('h2>a.Vesti')[:href].match(/[0-9]+/).to_s.to_i rescue 0
       if last_article_id > 0
