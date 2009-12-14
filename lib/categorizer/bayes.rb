@@ -81,6 +81,6 @@ module Categorizer
       return default
     end
 
-    COMMON_WORDS = [] # this is truncated
+    COMMON_WORDS = []
   end
 end
