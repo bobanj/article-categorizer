@@ -9,11 +9,19 @@ namespace :a1 do
     response, doc = http.get("/default.aspx")
     if response.code == "200"
       doc = Nokogiri::HTML(doc, nil, 'WINDOWS-1251')
+      first_article_id = ENV['start'].to_i
+      if first_article_id == 0
       first_article_id = portal.articles.last.itemid.to_i rescue 50
-      last_article_id = doc.at('h2>a.Vesti')[:href].match(/[0-9]+/).to_s.to_i rescue 0
+      end
+      last_article_id = ENV['count'].to_i
+      if last_article_id > 0
+        last_article_id = first_article_id + last_article_id
+      else
+       last_article_id = doc.at('h2>a.Vesti')[:href].match(/[0-9]+/).to_s.to_i rescue 0
+      end
       puts "FIRST ARTICLE #{first_article_id}"
       puts "LAST ARTICLE #{last_article_id}"
-      if last_article_id > 0
+      if last_article_id > 0 && first_article_id <= last_article_id
         (first_article_id..last_article_id).each do |article_id|
           response, doc = http.get("/vesti/default.aspx?VestID=#{article_id}")
           if response.code == "200"
@@ -27,7 +35,7 @@ namespace :a1 do
           end
         end
       else
-        puts "#------ CHECK PARSING LAST ARTICLE ID ------#"
+        puts "#------ INVALID FIRST OR LAST ARTICLE IDS ------#"
       end
     else
       puts "#------ RESPONSE CODE FOR /default.aspx FAIL ------#"
