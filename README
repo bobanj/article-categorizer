@@ -2,10 +2,34 @@ Guesses the category of a given article, depending from previously parsed articl
 Decission is determined from parsed articles  from www.a1.com.mk
 
 Instalation:
-after cloning
-add database.yml to config dir
-rake gems:install
-rake db:create;rake db:migrate;rake db:seed;
-rake a1:get_articles
 
+Get the project
+  	 git clone git://github.com/bobanj/article_categorizer_mk.git
+Create your database.yml into the config dir.
+Install needed libs for Nokogiri
+ Linux:
+    install these libs: libxslt1-dev libxml2-dev
+    install gem with: gem install nokogiri
+ Windows:
+    install with: gem install nokogiri -s http://tenderlovemaking.com/
+Install the other gems by running:
+    rake gems:install
+Prepare the database:
+    rake db:create
+    rake db:migrate
+    rake db:seed;
+Get the articles:
+    First make sure that http://www.a1.com.mk is alive :)
+    You can run one rake process to get all the articles if you dont mind waiting
+    the rake task to parse all the articles with:
+        rake a1:get_articles
+    Or you can run multiple rake tasks to get all the data faster by setting a start and cont parameters
+        rake a1:get_articles start=50 count=10000
+        where start is the newsid from a1 and count is the number of articles that will be parsed
+        so you can run multiple rake tasks to get more articles at the same time:
+        rake a1:get_articles start=10000 count=9999
+        rake a1:get_articles start=20000 count=9999
+        rake a1:get_articles start=30000 count=9999
+        (you get the point)
+    Dont worry if there is an overlap, one article cant be inserted multiple times
 #so far :)

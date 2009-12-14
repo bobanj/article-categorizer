@@ -2,43 +2,7 @@
 namespace :a1 do
   desc "Fill database with articles from a1.com.mk"
   task :get_articles => :environment do
-
-    portal = Portal.find_by_name "a1"
-    http = Net::HTTP.new(portal.hostname)
-
-    response, doc = http.get("/default.aspx")
-    if response.code == "200"
-      doc = Nokogiri::HTML(doc, nil, 'WINDOWS-1251')
-      first_article_id = ENV['start'].to_i
-      if first_article_id == 0
-      first_article_id = portal.articles.last.itemid.to_i rescue 50
-      end
-      last_article_id = ENV['count'].to_i
-      if last_article_id > 0
-        last_article_id = first_article_id + last_article_id
-      else
-       last_article_id = doc.at('h2>a.Vesti')[:href].match(/[0-9]+/).to_s.to_i rescue 0
-      end
-      puts "FIRST ARTICLE #{first_article_id}"
-      puts "LAST ARTICLE #{last_article_id}"
-      if last_article_id > 0 && first_article_id <= last_article_id
-        (first_article_id..last_article_id).each do |article_id|
-          response, doc = http.get("/vesti/default.aspx?VestID=#{article_id}")
-          if response.code == "200"
-            doc = Nokogiri::HTML(doc, nil, 'WINDOWS-1251')
-            category_name = doc.at('a#lnkKat').text.strip
-            category = portal.categories.find_or_create_by_name :name => category_name
-            title = doc.at('#H2naslov').text
-            body = title + doc.css('td p').collect(&:text).join
-            category.articles.create :title => title, :body => body, :itemid => article_id.to_s
-            puts "Article #{article_id}"
-          end
-        end
-      else
-        puts "#------ INVALID FIRST OR LAST ARTICLE IDS ------#"
-      end
-    else
-      puts "#------ RESPONSE CODE FOR /default.aspx FAIL ------#"
-    end
+    a1 = Media::A1.new(ENV['start'],ENV['count'])
+    a1.get_articles
   end
 end
