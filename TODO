@@ -1,1 +1,4 @@
-- Implement Baesyan .....
+ - Fix media:trainer task
+ - Marshalize The Trainer to file or Database #think about this
+ - Make Training Possible only for new articles #write last_training_article_id to file
+ 
