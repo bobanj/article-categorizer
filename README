@@ -24,12 +24,12 @@ Get the articles:
     the rake task to parse all the articles with:
         rake a1:get_articles
     Or you can run multiple rake tasks to get all the data faster by setting a start and cont parameters
-        rake a1:get_articles start=50 count=10000
+        rake media:get_articles start=50 count=10000
         where start is the newsid from a1 and count is the number of articles that will be parsed
         so you can run multiple rake tasks to get more articles at the same time:
-        rake a1:get_articles start=10000 count=9999
-        rake a1:get_articles start=20000 count=9999
-        rake a1:get_articles start=30000 count=9999
+        rake media:get_articles start=10000 count=9999
+        rake media:get_articles start=20000 count=9999
+        rake media:get_articles start=30000 count=9999
         (you get the point)
     Dont worry if there is an overlap, one article cant be inserted multiple times
 #so far :)
