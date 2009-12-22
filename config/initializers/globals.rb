@@ -1,1 +1,1 @@
-A1_HOSTNAME = 'a1.com.mk'
+CATEGORIZER_PATH = RAILS_ROOT+"/categorizer.stash"

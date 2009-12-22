@@ -10,9 +10,13 @@ class Media
   end
 
   #Gets all requested articles from www.a1.com.mk
-  def get_articles
+  def get_articles(options = {})
     puts "FIRST ARTICLE ID #{@first_article_id}"
     puts "LAST ARTICLE ID #{@last_article_id}"
+    puts "INITIALIZING CATEGORIZER"
+    Categorizer::Bayes.class
+    categorizer = ObjectStash.load CATEGORIZER_PATH if options[:train] == true
+    puts "CATEGORIZER INITIALIZED"
     (@first_article_id..@last_article_id).each do |article_id|
       response, doc = @http.get("/vesti/default.aspx?VestID=#{article_id}")
       if response.code == "200"
@@ -21,10 +25,16 @@ class Media
         category = @portal.categories.find_or_create_by_name(:name => category_name)
         title = doc.at('#H2naslov').text
         body = title + doc.css('td p').collect(&:text).join
-        category.articles.create(:title => title, :body => body, :itemid => article_id.to_s)
+        article = category.articles.create(:title => title, :body => body, :itemid => article_id.to_s)
+        if options[:train] == true && article.errors.size == 0
+          categorizer.train(category.name, article.body)
+        end
         puts "Article #{article_id}"
       end
     end
+    puts "SAVING CATEGORIZER"
+    ObjectStash.store categorizer, CATEGORIZER_PATH
+    puts "CATEGORIZER SAVED"
   end
 
   #Private functions go here

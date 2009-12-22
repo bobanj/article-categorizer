@@ -17,3 +17,4 @@ config/database.yml
 public/upload/
 .tmp_*
 ./idea/*
+./training_ground/*

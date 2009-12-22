@@ -1,14 +1,17 @@
 #This rake task Trains all Categories
 namespace :media do
   desc "Categorizing Trainer"
-  task :train => :environment do
+  task :train_all => :environment do
     categories = Category.find(:all, :conditions => "name != ''")
-    classifier = Categorizer::Bayes.new(categories.collect(&:name))
+    #categotizer = Categorizer::Bayes.new(categories.collect(&:name))
+    Categorizer::Bayes.class
+    categotizer = ObjectStash.load CATEGORIZER_PATH
     categories.each{|category|
-      category.articles.find(:all, :limit => 100).each { |article|
-        classifier.train(category.name, article.body)
+      category.articles.find(:all).each { |article|
+        categotizer.train(category.name, article.body)
       }
     }
+    ObjectStash.store categotizer, CATEGORIZER_PATH
   end
 end
 

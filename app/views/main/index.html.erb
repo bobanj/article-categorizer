@@ -1,0 +1,8 @@
+<% form_for :categorize do |f| %>
+  <%= @category %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.text_area :text, :value => @text %>
+  </p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>

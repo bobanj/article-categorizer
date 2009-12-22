@@ -1,7 +1,9 @@
 #VERY UNSTABLE AND IS NOT USED ANYWHERE YET
 module Categorizer
   class Bayes
+    attr_reader :categories, :categories_documents, :total_documents, :threshold, :total_words, :categories_words
     def initialize(categories)
+      @categories = categories
       @words = Hash.new
       @total_words = 0
       @categories_documents = Hash.new
@@ -9,7 +11,7 @@ module Categorizer
       @categories_words = Hash.new
       @threshold = 1.5
 
-      categories.each { |category|
+      categories.each { |category|                        
         @words[category] = Hash.new
         @categories_documents[category] = 0
         @categories_words[category] = 0
@@ -17,7 +19,15 @@ module Categorizer
     end
 
     def train(category, document)
+      return if category.blank?
+      unless @categories.include? category
+        @categories << category
+        @words[category] = Hash.new
+        @categories_documents[category] = 0
+        @categories_words[category] = 0
+      end
       word_count(document).each do |word, count|
+        #word = word[0,6] if word.size > 6
         @words[category][word] ||= 0
         @words[category][word] += count
         @total_words += count
@@ -25,13 +35,6 @@ module Categorizer
       end
       @categories_documents[category] += 1
       @total_documents += 1
-    end
-
-    def classify(document, default='unknown')
-      sorted = probabilities(document).sort {|a, b| a[1] <=> b[1]}
-      best, second_best = sorted.pop, sorted.pop
-      return best[0] if (best[1]/second_best[1] > @threshold)
-      return default
     end
 
     def word_count(document)
@@ -74,11 +77,16 @@ module Categorizer
       @categories_documents[category].to_f/@total_documents.to_f
     end
 
-    def classify(document, default='unknown')
+    def classify(document)
       sorted = probabilities(document).sort {|a, b| a[1] <=> b[1]}
       best, second_best = sorted.pop, sorted.pop
       return best[0] if (best[1]/second_best[1] > @threshold)
-      return default
+      return best[0]
+      #return category_with_most_articles
+    end
+
+    def category_with_most_articles
+      @categories_documents.sort{|a,b| a[1] <=> b[1]}.last[0]
     end
 
     COMMON_WORDS = []
