@@ -1,5 +1,7 @@
+<% title "Categorizer" %>
+<h3>Input text and I will guess the category</h3>
+<h2><%= @category %></h2>
 <% form_for :categorize do |f| %>
-  <%= @category %>
   <%= f.error_messages %>
   <p>
     <%= f.text_area :text, :value => @text %>

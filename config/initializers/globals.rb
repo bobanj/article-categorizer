@@ -1,1 +1,1 @@
-CATEGORIZER_PATH = RAILS_ROOT+"/categorizer.stash"
+CATEGORIZER_PATH = RAILS_ROOT+"/training_ground/categorizer.stash"

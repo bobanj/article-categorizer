@@ -8,7 +8,7 @@
   </tr>
   <% for article in @articles %>
     <tr>
-      <td><%=h article.category %></td>
+      <td><%=h article.category.name %></td>
       <td><%=h article.title %></td>
       <td><%=h article.body %></td>
       <td><%= link_to "Show", article %></td>

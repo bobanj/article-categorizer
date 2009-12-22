@@ -1,6 +1,9 @@
 class PortalsController < ApplicationController
+  # Before Filters
+  before_filter :require_user
+  
   def index
-    @portals = Portal.all
+    @portals = Portal.paginate :page => params[:page], :order => 'created_at DESC'
   end
   
   def show

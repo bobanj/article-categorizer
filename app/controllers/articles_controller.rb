@@ -1,16 +1,19 @@
 class ArticlesController < ApplicationController
+  # Before Filters
+  before_filter :require_user
+
   def index
-    @articles = Article.all
+    @articles = Article.paginate :page => params[:page], :order => 'created_at DESC'
   end
-  
+
   def show
     @article = Article.find(params[:id])
   end
-  
+
   def new
     @article = Article.new
   end
-  
+
   def create
     @article = Article.new(params[:article])
     if @article.save
@@ -20,11 +23,11 @@ class ArticlesController < ApplicationController
       render :action => 'new'
     end
   end
-  
+
   def edit
     @article = Article.find(params[:id])
   end
-  
+
   def update
     @article = Article.find(params[:id])
     if @article.update_attributes(params[:article])
@@ -34,7 +37,7 @@ class ArticlesController < ApplicationController
       render :action => 'edit'
     end
   end
-  
+
   def destroy
     @article = Article.find(params[:id])
     @article.destroy

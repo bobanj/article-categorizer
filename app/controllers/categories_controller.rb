@@ -1,6 +1,9 @@
 class CategoriesController < ApplicationController
+  # Before Filters
+  before_filter :require_user
+  
   def index
-    @categories = Category.all
+    @categories = Category.paginate :page => params[:page], :order => 'created_at DESC'
   end
   
   def show
