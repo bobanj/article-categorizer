@@ -22,7 +22,9 @@ Get the articles:
     First make sure that http://www.a1.com.mk is alive :)
     You can run one rake process to get all the articles if you dont mind waiting
     the rake task to parse all the articles with:
-        rake a1:get_articles
+        rake media:get_articles #(better use start and count params because the training is done
+                                # after getting the articles - due to performance)
+    The categorizer gets trained with every new article.
     Or you can run multiple rake tasks to get all the data faster by setting a start and cont parameters
         rake media:get_articles start=50 count=10000
         where start is the newsid from a1 and count is the number of articles that will be parsed
@@ -32,4 +34,14 @@ Get the articles:
         rake media:get_articles start=30000 count=9999
         (you get the point)
     Dont worry if there is an overlap, one article cant be inserted multiple times
-#so far :)
+Create manualy one account # I'll change this in future commits
+    User.create :email => your_email, :password => your_pass, :password_confirmation => your_pass
+Start the server
+
+
+#########
+# TO DO #
+#########
+ - Manage Users ?
+ - Write learining in db ?
+ - New layout

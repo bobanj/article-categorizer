@@ -1,4 +1,5 @@
 #This rake task Trains all Categories
+# USE THIS ONLY IF ALL YOUR ARTICLES ARE 'UNTRAINED'
 namespace :media do
   desc "Categorizing Trainer"
   task :train_all => :environment do
