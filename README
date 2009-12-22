@@ -24,7 +24,6 @@ Get the articles:
     the rake task to parse all the articles with:
         rake media:get_articles #(better use start and count params because the training is done
                                 # after getting the articles - due to performance)
-    The categorizer gets trained with every new article.
     Or you can run multiple rake tasks to get all the data faster by setting a start and cont parameters
         rake media:get_articles start=50 count=10000
         where start is the newsid from a1 and count is the number of articles that will be parsed
@@ -34,6 +33,12 @@ Get the articles:
         rake media:get_articles start=30000 count=9999
         (you get the point)
     Dont worry if there is an overlap, one article cant be inserted multiple times
+
+    After getting all the articles you need to start the training:
+Training
+    rake media:train_all #Please be patient
+After the training is finished you can set a crone task to get new articles every day and train with them
+    rake media:get_articles train=true
 Create manualy one account # I'll change this in future commits
     User.create :email => your_email, :password => your_pass, :password_confirmation => your_pass
 Start the server

@@ -10,7 +10,7 @@ class Media
   end
 
   #Gets all requested articles from www.a1.com.mk
-  def get_articles(options = {})
+  def get_articles(options = {:train => false})
     puts "FIRST ARTICLE ID #{@first_article_id}"
     puts "LAST ARTICLE ID #{@last_article_id}"
     puts "INITIALIZING CATEGORIZER"

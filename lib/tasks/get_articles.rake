@@ -3,6 +3,6 @@ namespace :media do
   desc "Fill database with articles from a1.com.mk"
   task :get_articles => :environment do
     media = Media.new("a1",ENV['start'],ENV['count'])
-    media.get_articles({:train => true})
+    media.get_articles({:train => (ENV['train'] == "true")})
   end
 end
