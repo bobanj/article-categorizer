@@ -4,7 +4,7 @@ namespace :media do
   desc "Categorizing Trainer"
   task :train_all => :environment do
     Categorizer::Bayes.class
-    ObjectStash.store Categorizer::Bayes.new([]), CATEGORIZER_PATH
+    categotizer = ObjectStash.store Categorizer::Bayes.new([]), CATEGORIZER_PATH
     categories = Category.find(:all, :conditions => "name != ''")
     #categotizer = ObjectStash.load CATEGORIZER_PATH
     categories.each{|category|
