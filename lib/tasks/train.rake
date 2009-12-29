@@ -8,9 +8,9 @@ namespace :media do
     categories = Category.find(:all, :conditions => "name != ''")
     #categotizer = ObjectStash.load CATEGORIZER_PATH
     categories.each{|category|
-      num_pages = category.articles.paginate(:per_page => 50, :page => 1).total_pages
+      num_pages = category.articles.paginate(:per_page => 500, :page => 1).total_pages
       (1..num_pages).each{ |page|
-        articles = category.articles.paginate(:per_page => 50, :page => page)
+        articles = category.articles.paginate(:per_page => 100, :page => page)
         articles.each{ |article|
           categotizer.train(category.name, article.body)
         }
